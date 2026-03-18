@@ -1,0 +1,19 @@
+# Alias Patrióticos
+alias actualizar="sudo dnf update"
+alias limpiar="clear"
+alias reiniciar="sudo reboot"
+alias refrescar="sudo dnf clean all && sudo dnf makecache"
+
+#Alias ZeroTier
+alias zerotier_estado="sudo zerotier-cli status"
+alias zerotier_conectar="sudo zerotier-cli join"
+alias zerotier_listar="sudo zerotier-cli listnetworks"
+alias zerotier_desconectar="sudo zerotier-cli leave"
+alias zerotier_todo="sudo zerotier-cli status && sudo zerotier-cli listnetworks"
+
+#Alias Samba
+alias añadir_usuariosmb="sudo bash /Templates/Samba/añadir_usuarios.sh"
+
+#Alias Podman
+alias actualizar_templates="sudo bash /Templates/update.sh"
+alias crear_server="bash /Templates/deploy.sh"
