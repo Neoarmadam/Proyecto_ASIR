@@ -41,13 +41,13 @@ hacer_backup() {
     local archivo="$1"
     if [[ -f "$archivo" ]]; then
         local nombre_bak="${archivo}.bak_$(date +%F_%H%M%S)"
-        cp "$archivo" "$nombre_bak"
+        sudo cp "$archivo" "$nombre_bak"
+        sudo rm "$archivo"
         echo "Backup creado: $nombre_bak"
-    else
-        # Si no existe, lo creamos vacío para que el script pueda escribir
-        touch "$archivo"
-        chmod 644 "$archivo"
     fi
+    # Lo creamos vacío para que el script pueda escribir
+    sudo touch "$archivo"
+    sudo chmod 644 "$archivo"
 }
 
 # Añadir los alias de forma limpia
