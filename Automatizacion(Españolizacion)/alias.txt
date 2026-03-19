@@ -12,8 +12,8 @@ alias zerotier_desconectar="sudo zerotier-cli leave"
 alias zerotier_todo="sudo zerotier-cli status && sudo zerotier-cli listnetworks"
 
 #Alias Samba
-alias añadir_usuariosmb="sudo bash /Templates/Samba/añadir_usuarios.sh"
+alias añadir_usuariosmb="sudo bash /Auto_Neo/Samba/añadir_usuarios.sh"
 
 #Alias Podman
-alias actualizar_templates="sudo bash /Templates/update.sh"
-alias crear_server="bash /Templates/deploy.sh"
+alias actualizar_templates="sudo bash /Auto_Neo/update.sh"
+alias crear_server="bash /Auto_Neo/servidores/deploy.sh"

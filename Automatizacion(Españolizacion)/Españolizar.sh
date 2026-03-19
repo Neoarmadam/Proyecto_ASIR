@@ -4,7 +4,7 @@
 # Instalar dependencias en el servidor
 instalar_dependencias(){
     local REPO_URL="https://github.com/Neoarmadam/Proyecto_ASIR" 
-    local TARGET_DIR="/Templates" 
+    local TARGET_DIR="/Auto_Neo" 
 
     echo "Se van a instalar dependencias elegidas por el gran administrador en el servidor."
     sudo dnf install git -y
@@ -33,7 +33,7 @@ comprobar_alias(){
 
 # MODIFICADO: Ahora apunta a una ruta global que SIEMPRE se carga
 obtener_shell() {
-    echo "/etc/profile.d/mis_alias.sh"
+    echo "/etc/profile.d/auto_neo.sh"
 }
 
 # Crear Backup (Solo si el archivo ya existe)

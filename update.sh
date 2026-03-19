@@ -12,7 +12,7 @@ comprobar_root(){
 #Funcion que ejecuta el Script. Actualiza los templates.
 main(){
     local REPO_URL="https://github.com/Neoarmadam/Proyecto_ASIR" #Ruta de mi Github.
-    local TARGET_DIR="/Templates" #Ruta de la carpeta de Plantillas.
+    local TARGET_DIR="/Auto_Neo" #Ruta de la carpeta de clonacion del GitHub.
 
     echo "Actualizando plantillas..."
     sudo rm -rf $TARGET_DIR
