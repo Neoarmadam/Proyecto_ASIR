@@ -5,15 +5,18 @@ alias reiniciar="sudo reboot"
 alias refrescar="sudo dnf clean all && sudo dnf makecache"
 
 #Alias ZeroTier
-alias zerotier_estado="sudo zerotier-cli status"
-alias zerotier_conectar="sudo zerotier-cli join"
-alias zerotier_listar="sudo zerotier-cli listnetworks"
-alias zerotier_desconectar="sudo zerotier-cli leave"
-alias zerotier_todo="sudo zerotier-cli status && sudo zerotier-cli listnetworks"
+alias z_estado="sudo zerotier-cli status"
+alias z_conectar="sudo zerotier-cli join"
+alias z_listar="sudo zerotier-cli listnetworks"
+alias z_desconectar="sudo zerotier-cli leave"
+alias z_todo="sudo zerotier-cli status && sudo zerotier-cli listnetworks"
 
 #Alias Samba
 alias añadir_usuariosmb="sudo bash /Auto_Neo/Samba/añadir_usuarios.sh"
+alias iniciar_smb="sudo bash/Auto_Neo/Samba/iniciar_samba.sh"
 
 #Alias Podman
-alias actualizar_templates="sudo bash /Auto_Neo/update.sh"
-alias crear_server="bash /Auto_Neo/servidores/deploy.sh"
+alias actualizar_neo="sudo bash /Auto_Neo/update.sh"
+alias desplegar_server="bash /Auto_Neo/servidores/deploy.sh"
+alias listar_podman="podman ps"
+alias listar_t_podman="podman ps -a"
