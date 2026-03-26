@@ -105,12 +105,40 @@ dibujar_bandera() {
     echo ""
 }
 
+#Funcion para dar avisos al usuario
+avisos(){
+    local opcion 
+
+    echo "Se está ejecutando el script: $0"
+    sleep 1
+
+    echo "Se recomienda actualizar el sistema antes de continuar. Este Script no lo puede hacer, existe probabilidad de reiniciar Cockpit."
+    read -p "Presiona [ENTER] para continuar o cualquier otra tecla para salir... " opcion
+
+    if [[ -n "$opcion" ]]; then
+        echo "Operación cancelada por el usuario."
+        exit 1
+    fi
+
+    echo "Estas seguro de continuar, no nos hacemos responsables de cualquier daño generado por la ejecucion del Script."
+    read -p "Presiona [ENTER] para continuar o cualquier otra tecla para salir... " opcion
+
+    if [[ -n "$opcion" ]]; then
+        echo "Operación cancelada por el usuario."
+        exit 1
+    fi
+
+    echo "Continuando..."
+    sleep 1
+}
+
 # Funcion principal
 main() {
     local ARCHIVO_ALIASTXT="alias.txt"
     local config_global=$(obtener_shell)
 
     comprobar_root
+    avisos
     comprobar_alias "$ARCHIVO_ALIASTXT"
     instalar_dependencias
     clear
