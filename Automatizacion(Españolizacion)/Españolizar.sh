@@ -3,13 +3,12 @@
 
 # Instalar dependencias en el servidor
 instalar_dependencias(){
-    local REPO_URL="https://github.com/Neoarmadam/Proyecto_ASIR" 
-    local TARGET_DIR="/Auto_Neo" 
+    local REPO_URL="https://github.com/Neoarmadam/Proyecto_ASIR"
+    local TARGET_DIR="/Auto_Neo"
 
     echo "Se van a instalar dependencias elegidas por el gran administrador en el servidor."
     sudo dnf install git cockpit-podman cockpit-storaged cockpit-files -y
     curl -s https://install.zerotier.com | sudo bash
-    
     # Evitar error si la carpeta ya existe
     if [ ! -d "$TARGET_DIR" ]; then
         sudo git clone $REPO_URL $TARGET_DIR
