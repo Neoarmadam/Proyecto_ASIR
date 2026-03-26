@@ -55,6 +55,9 @@ aplicar_alias() {
     local origen="$1"
     local destino="$2"
 
+    # Comando para limpiar el archivo de alias por si acaso viene de Windows
+    sed -i 's/\r$//' "$1"
+
     echo "ESPAÑOLIZANDO el servidor globalmente..."
 
     while IFS= read -r linea || [[ -n "$linea" ]]; do
