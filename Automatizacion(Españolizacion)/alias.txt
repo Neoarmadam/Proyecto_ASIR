@@ -13,10 +13,13 @@ alias z_todo="sudo zerotier-cli status && sudo zerotier-cli listnetworks"
 
 #Alias Samba
 alias añadir_usuariosmb="sudo bash /Auto_Neo/Samba/añadir_usuarios.sh"
-alias iniciar_smb="sudo bash/Auto_Neo/Samba/iniciar_samba.sh"
 
 #Alias Podman
-alias actualizar_neo="sudo bash /Auto_Neo/update.sh"
 alias desplegar_server="bash /Auto_Neo/servidores/deploy.sh"
 alias listar_podman="podman ps"
 alias listar_t_podman="podman ps -a"
+
+#Alias Auto_Neo
+alias actualizar_neo="sudo bash /Auto_Neo/update.sh"
+alias españa="sudo bash /Auto_Neo/Automatizacion(Españolizacion)/Españolizar.sh"
+alias iniciar_smb="sudo bash/Auto_Neo/Samba/iniciar_samba.sh"
