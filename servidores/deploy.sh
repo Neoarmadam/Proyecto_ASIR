@@ -58,7 +58,7 @@ ejecutar_despliegue() {
 
 #Funcion que ejecuta el Script
 main() {
-    local TARGET_DIR="/Templates"
+    local TARGET_DIR="/servidores"
     
     mostrar_bienvenida
     
