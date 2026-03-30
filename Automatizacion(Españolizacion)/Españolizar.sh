@@ -1,7 +1,7 @@
 #!/bin/bash
 # Neo Armada
 
-# Instalar dependencias en el servidor
+# Instalar dependencias en el servidor.
 instalar_dependencias(){
     local REPO_URL="https://github.com/Neoarmadam/Proyecto_ASIR"
     local TARGET_DIR="/Auto_Neo"
@@ -14,13 +14,13 @@ instalar_dependencias(){
 
     curl -s https://install.zerotier.com | sudo bash
 
-    # Evitar error si la carpeta ya existe
+    # Evitar error si la carpeta ya existe.
     if [ ! -d "$TARGET_DIR" ]; then
         sudo git clone $REPO_URL $TARGET_DIR
     fi
 }
 
-# Comprobar que se ejecuta con privilegios
+# Comprobar que se ejecuta con privilegios.
 comprobar_root(){
     if (( $EUID != 0 )); then 
         echo "Este Script debe ejecutarse con sudo o como root."
@@ -36,12 +36,12 @@ comprobar_alias(){
     fi
 }
 
-# MODIFICADO: Ahora apunta a una ruta global que SIEMPRE se carga
+# Ahora apunta a una ruta global que SIEMPRE se carga.
 obtener_shell() {
     echo "/etc/profile.d/auto_neo.sh"
 }
 
-# Crear Backup (Solo si el archivo ya existe)
+# Crear Backup (Solo si el archivo ya existe).
 hacer_backup() {
     local archivo="$1"
     if [[ -f "$archivo" ]]; then
@@ -55,23 +55,23 @@ hacer_backup() {
     sudo chmod 644 "$archivo"
 }
 
-# Añadir los alias de forma limpia
+# Añadir los alias de forma limpia.
 aplicar_alias() {
     local origen="$1"
     local destino="$2"
 
-    # Comando para limpiar el archivo de alias por si acaso viene de Windows
+    # Comando para limpiar el archivo de alias por si acaso viene de Windows.
     sed -i 's/\r$//' "$1"
 
     echo "ESPAÑOLIZANDO el servidor globalmente..."
 
     while IFS= read -r linea || [[ -n "$linea" ]]; do
-        # Saltar líneas vacías o comentarios
+        # Saltar líneas vacías o comentarios.
         if [[ -z "${linea// }" || "$linea" == \#* ]]; then
             continue
         fi
 
-        # Evitar duplicados
+        # Evitar duplicados.
         if grep -qF "$linea" "$destino"; then
             echo "  [-] Omitido (ya existe): $linea"
         else
@@ -105,7 +105,7 @@ dibujar_bandera() {
     echo ""
 }
 
-#Funcion para dar avisos al usuario
+#Funcion para dar avisos al usuario.
 avisos(){
     local opcion 
 
@@ -132,7 +132,7 @@ avisos(){
     sleep 1
 }
 
-# Funcion principal
+# Funcion principal.
 main() {
     local ARCHIVO_ALIASTXT="alias.txt"
     local config_global=$(obtener_shell)
