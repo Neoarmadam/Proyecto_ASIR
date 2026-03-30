@@ -9,7 +9,7 @@ read -p "Ruta local para datos (ej. /opt/mc_server): " VOL_PATH
 mkdir -p "$VOL_PATH"
 
 # Ejecución en Podman
-echo "🚀 Desplegando servidor..."
+echo "Desplegando servidor..."
 podman run -d \
   --name "$CONT_NAME" \
   -p "0.0.0.0:$PORT":25565 \

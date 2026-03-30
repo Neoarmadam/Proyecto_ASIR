@@ -7,6 +7,8 @@ read -p "Ruta local para datos (ej. /opt/mc_server): " VOL_PATH
 # Crear directorio si no existe
 mkdir -p "$VOL_PATH"
 
+# Ejecución en Podman
+echo "Desplegando servidor..."
 podman run -d \
   --name "$CONT_NAME" \
   -v "$VOL_PATH":/theforest:Z \
@@ -15,3 +17,5 @@ podman run -d \
   -p 8766:8766/udp \
   --restart always \
   docker.io/jammsen/the-forest-dedicated-server:latest
+
+echo "[+] Servidor $CONT_NAME listo."
