@@ -58,7 +58,7 @@ ejecutar_despliegue() {
 
 #Funcion que ejecuta el Script
 main() {
-    local TARGET_DIR="servidores"
+    local TARGET_DIR="/Auto_Neo/servidores"
     
     mostrar_bienvenida
     
