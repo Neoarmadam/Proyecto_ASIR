@@ -47,7 +47,7 @@ configurar_samba() {
     sudo smbpasswd -a "$USUARIO"
 
     # Reinicio de servicio
-    #sudo systemctl restart smbd #No funciona
+    sudo systemctl restart smb #Comprobar que funcione
 }
 
 # Funcion que ejecuta el Script.
