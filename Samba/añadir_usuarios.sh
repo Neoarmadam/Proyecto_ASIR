@@ -1,6 +1,14 @@
 #!/bin/bash
 # Neo Armada
 
+#Comprobar que se ejecuta con privilegios.
+comprobar_root(){
+    if (( $UID != 0 ));then 
+        echo "Este Script se ejecuta con derechos de administrador."
+        exit 1
+    fi
+}
+
 # Función para mostrar el menú y capturar el grupo
 seleccionar_grupo() {
     echo "------------------------------------------"
@@ -52,10 +60,11 @@ configurar_samba() {
 
 # Funcion que ejecuta el Script.
 main() {
+    comprobar_root
     echo "=== Gestor de Usuarios Samba ==="
     
-    crear_usuario_linux
     seleccionar_grupo
+    crear_usuario_linux
     configurar_samba
 
     echo "------------------------------------------"
