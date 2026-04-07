@@ -81,6 +81,7 @@ eliminar_usuarios_y_grupos() {
 
 # Funcion principal.
 main(){
+    comprobar_root
     local opcion
 
     echo "=== Script de Desinstalación de Samba para Fedora ==="
