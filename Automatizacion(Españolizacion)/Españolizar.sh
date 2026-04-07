@@ -36,11 +36,6 @@ comprobar_alias(){
     fi
 }
 
-# Ahora apunta a una ruta global que SIEMPRE se carga.
-obtener_shell() {
-    echo "/etc/profile.d/auto_neo.sh"
-}
-
 # Crear Backup (Solo si el archivo ya existe).
 hacer_backup() {
     local archivo="$1"
@@ -135,7 +130,7 @@ avisos(){
 # Funcion principal.
 main() {
     local ARCHIVO_ALIASTXT="alias.txt"
-    local config_global=$(obtener_shell)
+    local config_global="/etc/profile.d/auto_neo.sh" #La idea es que los alias sean para todos lus usuarios de Linux
 
     comprobar_root
     avisos
