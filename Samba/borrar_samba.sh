@@ -1,5 +1,5 @@
 #!/bin/bash
-# Neo Armada
+# Neo Armada.
 
 #Comprobar que se ejecuta con privilegios.
 comprobar_root(){
@@ -40,7 +40,7 @@ avisos(){
 eliminar_samba() {
     echo "---Eliminando paquetes de Samba---"
     sleep 3
-    dnf remove -y samba samba-common samba-client
+    dnf remove -y samba samba-common
     dnf autoremove -y
 }
 

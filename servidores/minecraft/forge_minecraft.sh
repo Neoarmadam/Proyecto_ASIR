@@ -1,4 +1,5 @@
 #!/bin/bash
+# Neo Armada.
 
 # Preguntas al usuario
 read -p "Nombre del contenedor: " nombre

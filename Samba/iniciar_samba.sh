@@ -1,5 +1,5 @@
 #!/bin/bash
-# Neo Armada
+# Neo Armada.
 
 #Comprobar que se ejecuta con privilegios.
 comprobar_root(){
@@ -65,8 +65,7 @@ configurar_smb(){
         write list = @editores, @streamers, @admins
         
         # Lógica de eliminación (Veto de borrado para editores)
-        # Nota: Samba no tiene un 'can_delete=no' nativo fácil, 
-        # pero podemos forzar el modo de creación.
+        # Nota: Samba no tiene un 'can_delete=no' nativo fácil,  pero podemos forzar el modo de creación.
         force create mode = 0664
         force directory mode = 0775
 EOF" 

@@ -1,5 +1,5 @@
 #!/bin/bash
-# Neo Armada
+# Neo Armada.
 
 #Mostrar menu de bienvenida
 mostrar_bienvenida() {

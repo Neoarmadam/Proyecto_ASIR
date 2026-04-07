@@ -1,5 +1,5 @@
 #!/bin/bash
-# Neo Armada
+# Neo Armada.
 
 #Comprobar que se ejecuta con privilegios.
 comprobar_root(){
@@ -37,21 +37,18 @@ crear_usuario_linux() {
     if id "$USUARIO" &>/dev/null; then
         echo "Aviso: El usuario '$USUARIO' ya existe. Saltando creación..."
     else
-        # Creamos usuario sin shell para mayor seguridad en Samba
-        sudo useradd -m -s /sbin/nologin "$USUARIO"
+        sudo useradd -m -s /sbin/nologin "$USUARIO" # Creamos usuario sin shell para mayor seguridad en Samba
         echo "Usuario Linux '$USUARIO' creado correctamente."
     fi
 }
 
 # Función para configurar Samba y permisos
 configurar_samba() {
-    # Asignar grupo
-    sudo usermod -aG "$GRUPO" "$USUARIO"
+    sudo usermod -aG "$GRUPO" "$USUARIO" # Asignar grupo al usuario creado anteriormente
     echo "Usuario '$USUARIO' añadido al grupo '$GRUPO'."
 
     # Contraseña de Samba
-    echo "------------------------------------------"
-    echo "Establece la contraseña de RED (Samba) para '$USUARIO':"
+    echo "---Establece la contraseña de RED (Samba) para '$USUARIO':"
     sudo smbpasswd -a "$USUARIO"
 
     # Reinicio de servicio
@@ -60,17 +57,13 @@ configurar_samba() {
 
 # Funcion que ejecuta el Script.
 main() {
-    comprobar_root
     echo "=== Gestor de Usuarios Samba ==="
-    
+    comprobar_root
     seleccionar_grupo
     crear_usuario_linux
     configurar_samba
 
-    echo "------------------------------------------"
-    echo "¡Éxito! El usuario '$USUARIO' ya tiene acceso."
-    echo "Grupo: $GRUPO | Recurso: //$(hostname -I | awk '{print $1}')/Videos"
-    echo "------------------------------------------"
+    echo "El usuario '$USUARIO' ya tiene acceso como $GRUPO"
 }
 
 main

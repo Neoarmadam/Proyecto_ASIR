@@ -1,5 +1,13 @@
 #!/bin/bash
-# Neo Armada
+# Neo Armada.
+
+# Comprobar que se ejecuta con privilegios.
+comprobar_root(){
+    if (( $EUID != 0 )); then 
+        echo "Este Script debe ejecutarse con sudo o como root."
+        exit 1
+    fi
+}
 
 # Instalar dependencias en el servidor.
 instalar_dependencias(){
@@ -20,14 +28,6 @@ instalar_dependencias(){
     fi
 }
 
-# Comprobar que se ejecuta con privilegios.
-comprobar_root(){
-    if (( $EUID != 0 )); then 
-        echo "Este Script debe ejecutarse con sudo o como root."
-        exit 1
-    fi
-}
-
 # Comprobar que el archivo alias esta.
 comprobar_alias(){
     if [[ ! -f "$1" ]]; then
@@ -45,7 +45,7 @@ hacer_backup() {
         sudo rm "$archivo"
         echo "Backup creado: $nombre_bak"
     fi
-    # Lo creamos vacío para que el script pueda escribir
+    # Lo creamos vacío para que el script pueda escribir, y ajusto sus permisos, por si acaso.
     sudo touch "$archivo"
     sudo chmod 644 "$archivo"
 }
@@ -61,12 +61,12 @@ aplicar_alias() {
     echo "ESPAÑOLIZANDO el servidor globalmente..."
 
     while IFS= read -r linea || [[ -n "$linea" ]]; do
-        # Saltar líneas vacías o comentarios.
+        # Saltar líneas vacías o comentarios. Por  estabilidad.
         if [[ -z "${linea// }" || "$linea" == \#* ]]; then
             continue
         fi
 
-        # Evitar duplicados.
+        # Evitar duplicados. No deberia pasar, pero por si acaso el usuario decide agregar sus alias.
         if grep -qF "$linea" "$destino"; then
             echo "  [-] Omitido (ya existe): $linea"
         else
@@ -130,7 +130,7 @@ avisos(){
 # Funcion principal.
 main() {
     local ARCHIVO_ALIASTXT="alias.txt"
-    local config_global="/etc/profile.d/auto_neo.sh" #La idea es que los alias sean para todos lus usuarios de Linux
+    local config_global="/etc/profile.d/auto_neo.sh" #La idea es que los alias sean para todos los usuarios de Linux
 
     comprobar_root
     avisos
