@@ -1,7 +1,7 @@
 #!/bin/bash
 # Neo Armada.
 
-#Comprobar que se ejecuta con privilegios.
+# Comprobar que se ejecuta con privilegios.
 comprobar_root(){
     if (( $UID != 0 ));then 
         echo "Este Script se ejecuta con derechos de administrador."
@@ -9,11 +9,11 @@ comprobar_root(){
     fi
 }
 
-#Funcion para dar avisos al usuario.
+# Funcion para dar avisos al usuario.
 avisos(){
     local opcion 
 
-    echo "Se está ejecutando el script: $0"
+    echo "--- Se está ejecutando el script: $0"
     sleep 1
 
     echo "Este Script va a eliminar Samba del sistema(El programa de las carpetas compartidas)"
@@ -36,7 +36,7 @@ avisos(){
     sleep 1
 }
 
-#Funcion que elimina los paquetes de Samba.
+# Funcion que elimina los paquetes de Samba.
 eliminar_samba() {
     echo "---Eliminando paquetes de Samba---"
     sleep 3
@@ -44,7 +44,7 @@ eliminar_samba() {
     dnf autoremove -y
 }
 
-#Funcion que limpia las configuraciones resuiduales de Samba.
+# Funcion que limpia las configuraciones resuiduales de Samba.
 limpiar_configuraciones() {
     echo "--- Eliminando archivos de configuración y directorios de datos ---"
     sleep 3
@@ -55,7 +55,7 @@ limpiar_configuraciones() {
     echo "Configuraciones eliminadas."
 }
 
-#Funcion que elimina los grupos de Samba.
+# Funcion que elimina los grupos de Samba.
 eliminar_usuarios_y_grupos() {
     local grupos=("editores" "streamers" "admins")
     

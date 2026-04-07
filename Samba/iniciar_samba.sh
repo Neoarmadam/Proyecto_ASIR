@@ -1,7 +1,7 @@
 #!/bin/bash
 # Neo Armada.
 
-#Comprobar que se ejecuta con privilegios.
+# Comprobar que se ejecuta con privilegios.
 comprobar_root(){
     if (( $UID != 0 ));then 
         echo "Este Script se ejecuta con derechos de administrador."
@@ -9,32 +9,32 @@ comprobar_root(){
     fi
 }
 
-#Instalar Samba.
+# Instalar Samba.
 instalar_samba(){
     sudo dnf install samba samba-common acl -y
 }
 
-#Crear grupos del sistema.
+# Crear grupos del sistema.
 crear_grupos(){
     sudo groupadd editores
     sudo groupadd streamers
     sudo groupadd admins
 }
 
-#Crear estructura de carpetas.
+# Crear estructura de carpetas.
 crear_carpetas(){
     local BASE_DIR="$1"
     sudo mkdir -p $BASE_DIR
 
-    #Configurar SELinux para Fedora.
+    # Configurar SELinux para Fedora.
     sudo setsebool -P samba_enable_home_dirs on
     sudo chcon -R -t samba_share_t $BASE_DIR
 
-    #Aplicar Permisos de Carpeta
+    # Aplicar Permisos de Carpeta.
     sudo chown root:admins $BASE_DIR
     sudo chmod 2775 $BASE_DIR
 
-    # Usamos ACLs para asegurar que los nuevos archivos hereden permisos
+    # Usamos ACLs para asegurar que los nuevos archivos hereden permisos.
     sudo setfacl -R -m g:admins:rwx $BASE_DIR
     sudo setfacl -R -d -m g:admins:rwx $BASE_DIR
     sudo setfacl -R -m g:streamers:rwx $BASE_DIR
@@ -44,7 +44,7 @@ crear_carpetas(){
 
 }
 
-#Configurar smb.conf
+# Configurar smb.conf.
 configurar_smb(){
    sudo mv /etc/samba/smb.conf /etc/samba/smb.conf.bak
     sudo bash -c "cat <<EOF > /etc/samba/smb.conf
@@ -71,7 +71,7 @@ configurar_smb(){
 EOF" 
 }
 
-#Abrir Firewall y reiniciar servicios
+# Abrir Firewall y reiniciar servicios.
 configurar_firewall(){
     sudo firewall-cmd --permanent --add-service=samba
     sudo firewall-cmd --reload
@@ -82,7 +82,7 @@ configurar_firewall(){
     echo "Carpeta: $1"
 }
 
-#Funcion que ejecuta el Script
+# Funcion que ejecuta el Script.
 main(){
     local BASE_DIR="/srv/samba/Videos"
 

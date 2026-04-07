@@ -1,14 +1,14 @@
 #!/bin/bash
 # Neo Armada.
 
-#Mostrar menu de bienvenida
+# Mostrar menu de bienvenida.
 mostrar_bienvenida() {
     echo "------------------------------------------"
     echo "BIENVENIDO AL DESPLEGADOR DE SERVIDORES"
     echo "------------------------------------------"
 }
 
-#Funcion que obtiene una lista de las carpetas de videojuegos y eliges de cual hacer el servidor.
+# Funcion que obtiene una lista de las carpetas de videojuegos y eliges de cual hacer el servidor.
 seleccionar_juego() {
     local directorio_raiz="$1"
     local juegos=($(ls -d "$directorio_raiz"/*/ 2>/dev/null | xargs -n 1 basename))
@@ -18,7 +18,7 @@ seleccionar_juego() {
         return 1
     fi
 
-    echo "Seleccione una opción (número): " >&2
+    echo "--- Seleccione una opción (número): " >&2
     select juego in "${juegos[@]}"; do
         if [ -n "$juego" ]; then
             echo "$juego"
@@ -29,7 +29,7 @@ seleccionar_juego() {
     done
 }
 
-#Funcion que lista las diferentes versiones que puedes hacer de un servidor de un juego.
+# Funcion que lista las diferentes versiones que puedes hacer de un servidor de un juego.
 ejecutar_despliegue() {
     local nombre_juego="$1"
     local base_dir="$2"
@@ -44,10 +44,10 @@ ejecutar_despliegue() {
         return 1
     fi
 
-    echo "Selecciona el script de despliegue para $nombre_juego:"
+    echo "--- Selecciona el script de despliegue para $nombre_juego:"
     select script in "${scripts[@]}"; do
         if [ -n "$script" ]; then
-            echo "🚀 Iniciando: $script"
+            echo "Iniciando: $script"
             bash "./$script"
             break
         else
@@ -56,7 +56,7 @@ ejecutar_despliegue() {
     done
 }
 
-#Funcion que ejecuta el Script
+# Funcion que ejecuta el Script.
 main() {
     local TARGET_DIR="/Auto_Neo/servidores"
     

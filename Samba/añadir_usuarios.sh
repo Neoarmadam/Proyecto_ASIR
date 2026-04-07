@@ -1,7 +1,7 @@
 #!/bin/bash
 # Neo Armada.
 
-#Comprobar que se ejecuta con privilegios.
+# Comprobar que se ejecuta con privilegios.
 comprobar_root(){
     if (( $UID != 0 ));then 
         echo "Este Script se ejecuta con derechos de administrador."
@@ -9,14 +9,12 @@ comprobar_root(){
     fi
 }
 
-# Función para mostrar el menú y capturar el grupo
+# Función para mostrar el menú y capturar el grupo.
 seleccionar_grupo() {
-    echo "------------------------------------------"
-    echo "Selecciona el grupo para el nuevo usuario:"
+    echo "--- Selecciona el grupo para el nuevo usuario:"
     echo "1) editores   (Ver, Crear, Editar)"
     echo "2) streamers  (Ver, Crear, Editar, Eliminar)"
     echo "3) admins     (Control Total)"
-    echo "------------------------------------------"
     read -p "Opción [1-3]: " OPCION
 
     case $OPCION in
@@ -30,29 +28,29 @@ seleccionar_grupo() {
     esac
 }
 
-# Función para crear el usuario en Linux
+# Función para crear el usuario en Linux.
 crear_usuario_linux() {
-    read -p "Introduce el nombre del nuevo usuario: " USUARIO
+    read -p "--- Introduce el nombre del nuevo usuario: " USUARIO
 
     if id "$USUARIO" &>/dev/null; then
         echo "Aviso: El usuario '$USUARIO' ya existe. Saltando creación..."
     else
-        sudo useradd -m -s /sbin/nologin "$USUARIO" # Creamos usuario sin shell para mayor seguridad en Samba
+        sudo useradd -m -s /sbin/nologin "$USUARIO" # Creamos usuario sin shell para mayor seguridad en Samba.
         echo "Usuario Linux '$USUARIO' creado correctamente."
     fi
 }
 
-# Función para configurar Samba y permisos
+# Función para configurar Samba y permisos.
 configurar_samba() {
-    sudo usermod -aG "$GRUPO" "$USUARIO" # Asignar grupo al usuario creado anteriormente
+    sudo usermod -aG "$GRUPO" "$USUARIO" # Asignar grupo al usuario creado anteriormente.
     echo "Usuario '$USUARIO' añadido al grupo '$GRUPO'."
 
-    # Contraseña de Samba
+    # Contraseña de Samba.
     echo "---Establece la contraseña de RED (Samba) para '$USUARIO':"
     sudo smbpasswd -a "$USUARIO"
 
-    # Reinicio de servicio
-    sudo systemctl restart smb #Comprobar que funcione
+    # Reinicio de servicio.
+    sudo systemctl restart smb #Comprobar que funcione.
 }
 
 # Funcion que ejecuta el Script.
@@ -63,7 +61,7 @@ main() {
     crear_usuario_linux
     configurar_samba
 
-    echo "El usuario '$USUARIO' ya tiene acceso como $GRUPO"
+    echo "--- El usuario '$USUARIO' ya tiene acceso como $GRUPO"
 }
 
 main
