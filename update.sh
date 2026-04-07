@@ -1,7 +1,7 @@
 #!/bin/bash
 # Neo Armada.
 
-#Comprobar que se ejecuta con privilegios
+# Comprobar que se ejecuta con privilegios.
 comprobar_root(){
     if (( $UID != 0 ));then 
         echo "Este Script se ejecuta con derechos de administrador."
@@ -9,7 +9,7 @@ comprobar_root(){
     fi
 }
 
-#Funcion que ejecuta el Script. Actualiza los templates.
+# Funcion que ejecuta el Script. Actualiza los templates.
 main(){
     local REPO_URL="https://github.com/Neoarmadam/Proyecto_ASIR" #Ruta de mi Github.
     local TARGET_DIR="/Auto_Neo" #Ruta de la carpeta de clonacion del GitHub.
