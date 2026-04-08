@@ -3,7 +3,7 @@
 
 # Comprobar que se ejecuta con privilegios.
 comprobar_root(){
-    if (( $EUID != 0 )); then 
+    if [[ $EUID -ne 0 ]]; then 
         echo "ERROR: Este Script debe ejecutarse con sudo o como root."
         exit 1
     fi
@@ -16,20 +16,21 @@ instalar_dependencias(){
 
     echo "- Se van a instalar dependencias elegidas por el gran desarrollador del Proyecto."
     sleep 1
-    sudo dnf install git cockpit-podman cockpit-storaged cockpit-files -y
+    dnf install git cockpit-podman cockpit-storaged cockpit-files -y
 
     curl -s https://install.zerotier.com | sudo bash
 
     if [ ! -d "$TARGET_DIR" ]; then
-        sudo git clone $REPO_URL $TARGET_DIR # Hay que usar sudo al clonar en raiz.
+        git clone "$REPO_URL" "$TARGET_DIR"
+    else
+        echo "- El directorio $TARGET_DIR ya existe, omitiendo clonación."
     fi
 }
 
 # Comprobar que el archivo alias esta.
 comprobar_alias(){
-    local ARCHIVO_ALIASTXT=$1
     if [[ ! -f "$1" ]]; then
-        echo "ERROR: No se encuentra el archivo '$ARCHIVO_ALIASTXT', tienes que copiarlo o crearlo con el Script."
+        echo "ERROR: No se encuentra el archivo '$1'."
         exit 1
     fi
 }
@@ -37,42 +38,28 @@ comprobar_alias(){
 # Crear Backup (Solo si el archivo ya existe).
 hacer_backup() {
     local archivo="$1"
-    
     if [[ -f "$archivo" ]]; then
         local nombre_bak="${archivo}.bak_$(date +%F_%H%M%S)"
-        sudo cp "$archivo" "$nombre_bak"
-        sudo rm "$archivo"
+        cp "$archivo" "$nombre_bak"
         echo "- Backup creado: $nombre_bak"
     fi
-    
-    sudo touch "$archivo" # Lo creamos vacío para que el script pueda escribir.
-    sudo chmod 644 "$archivo" # Ajusto sus permisos, por si acaso.
+    : > "$archivo" 
+    chmod 644 "$archivo"
+    chown root:root "$archivo"
 }
-
 # Añadir los alias de forma limpia.
 aplicar_alias() {
     local origen="$1"
     local destino="$2"
 
-    # Comando para limpiar el archivo de alias por si acaso viene de Windows.
-    sed -i 's/\r$//' "$1"
-
     echo "--- ESPAÑOLIZANDO el servidor globalmente..."
-
-    while IFS= read -r linea || [[ -n "$linea" ]]; do
-        # Saltar líneas vacías o comentarios. Por  estabilidad.
-        if [[ -z "${linea// }" || "$linea" == \#* ]]; then
-            continue
-        fi
-
-        # Evitar duplicados. No deberia pasar, pero por si acaso el usuario decide agregar sus alias.
-        if grep -qF "$linea" "$destino"; then
-            echo "  [-] Omitido (ya existe): $linea"
-        else
-            echo "$linea" >> "$destino"
-            echo "  [+] Añadido: $linea"
-        fi
-    done < "$origen"
+    
+    # Limpiar retornos de carro (CRLF a LF) y volcar directamente
+    # Es más eficiente que un bucle while para archivos de configuración
+    sed 's/\r$//' "$origen" >> "$destino"
+    
+    # Si quieres evitar comentarios y líneas vacías de forma limpia:
+    # sed -i '/^#/d; /^[[:space:]]*$/d' "$destino"
 }
 
 # Funcion que reinicia el servidor al acabar.
@@ -127,7 +114,8 @@ avisos(){
 
 # Funcion principal.
 main() {
-    local ARCHIVO_ALIASTXT="alias.txt"
+    local DIR_SCRIPT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+    local ARCHIVO_ALIASTXT="$DIR_SCRIPT/alias.txt"
     local config_global="/etc/profile.d/auto_neo.sh" #La idea es que los alias sean para todos los usuarios de Linux.
 
     comprobar_root
