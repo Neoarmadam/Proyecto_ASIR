@@ -1,11 +1,27 @@
-Descargar la carpeta de Automatizacion y ejecutar el SH dentro de esta. El cual creara alias ESPAÑOLIZADOS para usar el servidor, y ademas clonar este repositorio en el Sistemas, con atajos de actualizacion.
+# 🚀 Fedora Automation Suite | Proyecto Final ASIR
 
-Proyecto final de ASIR.
+Este ecosistema de automatización ha sido desarrollado como proyecto final para el grado de **ASIR (Administración de Sistemas Informáticos en Red)**. Su objetivo es centralizar la gestión de servidores Fedora mediante scripts Bash, optimizando la administración de almacenamiento y el despliegue de servicios mediante contenedores.
 
-Repositorio de Scripts automatizados.
+---
 
-SMB: Scripts para instalar Samba, crear tres grupos(editores, stremers y admins)con sus respectivos permisos. Tambien para creacion de usuarios en el SMB
+## 🛠️ Funcionalidades Principales
 
-Podman: Scripts automatizados para levantar contenedores para servidores de videojuegos.
+* **Abstracción de Comandos:** Inyección de alias "españolizados" para facilitar la administración diaria del sistema.
+* **Gestión de Almacenamiento (SMB):** Automatización de infraestructura Samba con jerarquía de grupos (`editores`, `streamers`, `admins`) y gestión de permisos.
+* **Virtualización con Podman:** Despliegue automatizado de servidores de videojuegos en contenedores ligeros y seguros.
+* **Sincronización:** Sistema de atajos para actualizar el repositorio y los scripts localmente con un solo comando.
 
-Todo para Fedora.
+---
+
+## 🚀 Instalación y Configuración
+
+Para poner en marcha el entorno, clona el repositorio y ejecuta el script de inicialización:
+
+```bash
+git clone https://github.com/Neoarmadam/Proyecto_ASIR
+cd TU_REPO/Automatizacion
+chmod +x Españolizar.sh
+./Españolizar.sh
+```
+
+Despues puedes borrar el repositorio que tu has clonado, al iniciar el entorno el repositorio de clona en raiz, y con los permisos necesarios para que todas las funciones esten disponibles.
