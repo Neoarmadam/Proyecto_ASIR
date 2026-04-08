@@ -12,8 +12,10 @@ alias z_desconectar="sudo zerotier-cli leave"
 alias z_todo="sudo zerotier-cli status && sudo zerotier-cli listnetworks"
 
 #Alias Samba
-alias añadir_usuariosmb="sudo bash /Auto_Neo/Samba/añadir_usuarios.sh"
-alias borrar_smb="sudo bash /Auto_Neo/Samba/borrar_samba.sh"
+alias smb_añadir_usuarios="sudo bash /Auto_Neo/Samba/añadir_usuarios.sh"
+alias smb_borrar="sudo bash /Auto_Neo/Samba/borrar_samba.sh"
+alias smb_listar_usuarios=sudo pdbedit -L
+alias smb_listar_usuarios_full=sudo pdbedit -L -v
 
 #Alias Podman
 alias desplegar_server="bash /Auto_Neo/Servidores/deploy.sh"
