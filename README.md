@@ -19,9 +19,13 @@ Para poner en marcha el entorno, clona el repositorio y ejecuta el script de ini
 
 ```bash
 git clone https://github.com/Neoarmadam/Proyecto_ASIR
-cd TU_REPO/Automatizacion
+cd Proyecto_ASIR/Automatizacion
 chmod +x Españolizar.sh
 ./Españolizar.sh
 ```
 
-Despues puedes borrar el repositorio que tu has clonado, al iniciar el entorno el repositorio de clona en raiz, y con los permisos necesarios para que todas las funciones esten disponibles.
+Despues puedes borrar el repositorio que tu has clonado, al iniciar el entorno el repositorio de clona en raiz, y con los permisos necesarios para que todas las funciones esten disponibles:
+
+```bash
+rm -r Proyecto_ASIR
+```
