@@ -4,14 +4,14 @@
 # Comprobar que se ejecuta con privilegios.
 comprobar_root(){
     if (( $UID != 0 ));then 
-        echo "Este Script se ejecuta con derechos de administrador."
+        echo "ERROR: Este Script debe ejecutarse con sudo o como root."
         exit 1
     fi
 }
 
 # Función para mostrar el menú y capturar el grupo.
 seleccionar_grupo() {
-    echo "--- Selecciona el grupo para el nuevo usuario:"
+    echo "- Selecciona el grupo para el nuevo usuario:"
     echo "(1) editores   (Ver, Crear, Editar)"
     echo "(2) streamers  (Ver, Crear, Editar, Eliminar)"
     echo "(3) admins     (Control Total)"
@@ -22,7 +22,7 @@ seleccionar_grupo() {
         2) GRUPO="streamers" ;;
         3) GRUPO="admins" ;;
         *)
-            echo "Error: Opción no válida."
+            echo "ERROR: Opción no válida."
             exit 1
             ;;
     esac
@@ -30,25 +30,25 @@ seleccionar_grupo() {
 
 # Función para crear el usuario en Linux.
 crear_usuario_linux() {
-    read -p "--- Introduce el nombre del nuevo usuario: " USUARIO
+    read -p "- Introduce el nombre del nuevo usuario: " USUARIO
 
     if id "$USUARIO" &>/dev/null; then
-        echo "- Aviso: El usuario '$USUARIO' ya existe. Saltando creación..."
+        echo "Aviso: El usuario '$USUARIO' ya existe. Saltando creación..."
         echo "Recuerda que el usuario debe ser solo de Samba. Debes evitar usar usuarios del servidor Linux."
         exit 1
     else
         sudo useradd -m -s /sbin/nologin "$USUARIO" # Creamos usuario sin shell para mayor seguridad en Samba.
-        echo "- Usuario Linux '$USUARIO' creado correctamente."
+        echo "Usuario Linux '$USUARIO' creado correctamente."
     fi
 }
 
 # Función para configurar Samba y permisos.
 configurar_samba() {
     sudo usermod -aG "$GRUPO" "$USUARIO" # Asignar grupo al usuario creado anteriormente.
-    echo "- Usuario '$USUARIO' añadido al grupo '$GRUPO'."
+    echo "Usuario '$USUARIO' añadido al grupo '$GRUPO'."
 
     # Contraseña de Samba.
-    echo "--- Establece la contraseña de RED (Samba) para '$USUARIO':"
+    echo "- Establece la contraseña de RED (Samba) para '$USUARIO':"
     sudo smbpasswd -a "$USUARIO"
 
     # Reinicio de servicio.

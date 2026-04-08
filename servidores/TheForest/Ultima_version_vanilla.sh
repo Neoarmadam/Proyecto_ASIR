@@ -1,14 +1,14 @@
 #!/bin/bash
 # Neo Armada.
 
-# Preguntas al usuario
+# Preguntas al usuario.
 read -p "Nombre del contenedor: " nombre
 read -p "Ruta local para datos (ej. /opt/mc_server): " carpeta
 
-# Crear directorio si no existe
+# Crear directorio si no existe.
 mkdir -p "$carpeta"
 
-# Ejecución en Podman
+# Ejecución en Podman.
 echo "Desplegando servidor..."
 podman run -d \
   --name "$nombre" \

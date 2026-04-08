@@ -4,7 +4,7 @@
 # Comprobar que se ejecuta con privilegios.
 comprobar_root(){
     if (( $EUID != 0 )); then 
-        echo "Este Script debe ejecutarse con sudo o como root."
+        echo "ERROR: Este Script debe ejecutarse con sudo o como root."
         exit 1
     fi
 }
@@ -14,21 +14,22 @@ instalar_dependencias(){
     local REPO_URL="https://github.com/Neoarmadam/Proyecto_ASIR"
     local TARGET_DIR="/Auto_Neo"
 
-    echo "Se van a instalar dependencias elegidas por el gran administrador en el servidor."
+    echo "- Se van a instalar dependencias elegidas por el gran desarrollador del Proyecto."
     sleep 1
     sudo dnf install git cockpit-podman cockpit-storaged cockpit-files -y
 
     curl -s https://install.zerotier.com | sudo bash
 
     if [ ! -d "$TARGET_DIR" ]; then
-        sudo git clone $REPO_URL $TARGET_DIR # Evitar error si la carpeta ya existe.
+        sudo git clone $REPO_URL $TARGET_DIR # Hay que usar sudo al clonar en raiz.
     fi
 }
 
 # Comprobar que el archivo alias esta.
 comprobar_alias(){
+    local ARCHIVO_ALIASTXT=$1
     if [[ ! -f "$1" ]]; then
-        echo "ERROR: No se encuentra el archivo '$1', tienes que copiarlo o crearlo con el Script."
+        echo "ERROR: No se encuentra el archivo '$ARCHIVO_ALIASTXT', tienes que copiarlo o crearlo con el Script."
         exit 1
     fi
 }
@@ -41,11 +42,11 @@ hacer_backup() {
         local nombre_bak="${archivo}.bak_$(date +%F_%H%M%S)"
         sudo cp "$archivo" "$nombre_bak"
         sudo rm "$archivo"
-        echo "--- Backup creado: $nombre_bak"
+        echo "- Backup creado: $nombre_bak"
     fi
     
-    sudo touch "$archivo" # Lo creamos vacío para que el script pueda escribir, y ajusto sus permisos, por si acaso.
-    sudo chmod 644 "$archivo"
+    sudo touch "$archivo" # Lo creamos vacío para que el script pueda escribir.
+    sudo chmod 644 "$archivo" # Ajusto sus permisos, por si acaso.
 }
 
 # Añadir los alias de forma limpia.
@@ -76,7 +77,7 @@ aplicar_alias() {
 
 # Funcion que reinicia el servidor al acabar.
 reiniciar_servidor() {
-    echo "--- Reinicio el servidor para aplicar cambios globales. Ahora es ESPAÑOL. ---"
+    echo "--- Reiniciando el servidor para aplicar cambios globales. Ahora es ESPAÑOL. ---"
     sleep 3
     sudo reboot
 }
@@ -104,7 +105,7 @@ avisos(){
     echo "--- Se está ejecutando el script: $0"
     sleep 1
 
-    echo "Se recomienda actualizar el sistema antes de continuar. Este Script no lo puede hacer, existe probabilidad de reiniciar Cockpit."
+    echo "- Se recomienda actualizar el sistema antes de continuar. Este Script no lo puede hacer, existe probabilidad de reiniciar Cockpit."
     read -p "Presiona [ENTER] para continuar o cualquier otra tecla para salir... " opcion
 
     if [[ -n "$opcion" ]]; then
@@ -112,22 +113,22 @@ avisos(){
         exit 1
     fi
 
-    echo "Estas seguro de continuar, no nos hacemos responsables de cualquier daño generado por la ejecucion del Script."
+    echo "- Estas seguro de continuar, no nos hacemos responsables de cualquier daño generado por la ejecucion del Script."
     read -p "Presiona [ENTER] para continuar o cualquier otra tecla para salir... " opcion
 
     if [[ -n "$opcion" ]]; then
-        echo "Operación cancelada por el usuario."
+        echo "- Operación cancelada por el usuario."
         exit 1
     fi
 
-    echo "Continuando..."
+    echo "- Continuando..."
     sleep 1
 }
 
 # Funcion principal.
 main() {
     local ARCHIVO_ALIASTXT="alias.txt"
-    local config_global="/etc/profile.d/auto_neo.sh" #La idea es que los alias sean para todos los usuarios de Linux
+    local config_global="/etc/profile.d/auto_neo.sh" #La idea es que los alias sean para todos los usuarios de Linux.
 
     comprobar_root
     avisos

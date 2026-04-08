@@ -4,7 +4,7 @@
 # Comprobar que se ejecuta con privilegios.
 comprobar_root(){
     if (( $UID != 0 ));then 
-        echo "Este Script se ejecuta con derechos de administrador."
+        echo "ERROR: Este Script debe ejecutarse con sudo o como root."
         exit 1
     fi
 }
@@ -20,15 +20,15 @@ avisos(){
     read -p "Presiona [ENTER] para continuar o cualquier otra tecla para salir... " opcion
 
     if [[ -n "$opcion" ]]; then
-        echo "- Operación cancelada por el usuario."
+        echo "Operación cancelada por el usuario."
         exit 1
     fi
 
-    echo "Estas seguro de continuar, se va a borrar Samba de su sistema."
+    echo "- Estas seguro de continuar, se va a borrar Samba de su sistema."
     read -p "Presiona [ENTER] para continuar o cualquier otra tecla para salir... " opcion
 
     if [[ -n "$opcion" ]]; then
-        echo "- Operación cancelada por el usuario."
+        echo "Operación cancelada por el usuario."
         exit 1
     fi
 
@@ -67,14 +67,14 @@ eliminar_usuarios_y_grupos() {
             miembros=$(getent group "$grupo" | cut -d: -f4 | tr ',' ' ')
             
             for usuario in $miembros; do
-                echo "- Eliminando usuario: $usuario"
+                echo "Eliminando usuario: $usuario"
                 userdel -r "$usuario" 2>/dev/null || echo "No se pudo eliminar al usuario $usuario (puede que no exista o esté en uso)."
             done
             
-            echo "- Eliminando grupo: $grupo"
+            echo "Eliminando grupo: $grupo"
             groupdel "$grupo"
         else
-            echo "- El grupo $grupo no existe, saltando..."
+            echo "El grupo $grupo no existe, saltando..."
         fi
     done
 }
@@ -88,8 +88,8 @@ main(){
     avisos
     eliminar_samba
 
-    echo "- Se ha eliminado Samba del sistema."
-    echo "¿Quieres eliminar los archivos de configuracion y usuarios que tenia Samba?"
+    echo "--- Se ha eliminado Samba del sistema."
+    echo "- ¿Quieres eliminar los archivos de configuracion y usuarios que tenia Samba?"
     read -p "Presiona [ENTER] para continuar o cualquier otra tecla para salir... " opcion
 
     if [[ -n "$opcion" ]]; then

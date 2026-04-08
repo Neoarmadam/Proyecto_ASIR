@@ -4,7 +4,7 @@
 # Comprobar que se ejecuta con privilegios.
 comprobar_root(){
     if (( $UID != 0 ));then 
-        echo "Este Script se ejecuta con derechos de administrador."
+        echo "ERROR: Este Script debe ejecutarse con sudo o como root."
         exit 1
     fi
 }
