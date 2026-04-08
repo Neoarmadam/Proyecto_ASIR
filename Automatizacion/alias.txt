@@ -16,11 +16,11 @@ alias añadir_usuariosmb="sudo bash /Auto_Neo/Samba/añadir_usuarios.sh"
 alias borrar_smb="sudo bash /Auto_Neo/Samba/borrar_samba.sh"
 
 #Alias Podman
-alias desplegar_server="bash /Auto_Neo/servidores/deploy.sh"
+alias desplegar_server="bash /Auto_Neo/Servidores/deploy.sh"
 alias listar_podman="podman ps"
 alias listar_t_podman="podman ps -a"
 
 #Alias Auto_Neo
-alias actualizar_neo="sudo bash /Auto_Neo/update.sh"
-alias españa="sudo bash /Auto_Neo/Automatizacion(Españolizacion)/Españolizar.sh"
+alias actualizar_neo="sudo bash /Auto_Neo/Automatizacion/update.sh"
+alias españa="sudo bash /Auto_Neo/Automatizacion/Españolizar.sh"
 alias iniciar_smb="sudo bash/Auto_Neo/Samba/iniciar_samba.sh"
