@@ -23,4 +23,4 @@ alias listar_t_podman="podman ps -a"
 #Alias Auto_Neo
 alias actualizar_neo="sudo bash /Auto_Neo/Automatizacion/update.sh"
 alias españa="sudo bash /Auto_Neo/Automatizacion/Españolizar.sh"
-alias iniciar_smb="sudo bash/Auto_Neo/Samba/iniciar_samba.sh"
+alias iniciar_smb="sudo bash /Auto_Neo/Samba/iniciar_samba.sh"
