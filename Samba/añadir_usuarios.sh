@@ -35,7 +35,7 @@ crear_usuario_linux() {
     if id "$USUARIO" &>/dev/null; then
         echo "- Aviso: El usuario '$USUARIO' ya existe. Saltando creación..."
         echo "Recuerda que el usuario debe ser solo de Samba."
-        exit 1;
+        exit 1
     else
         sudo useradd -m -s /sbin/nologin "$USUARIO" # Creamos usuario sin shell para mayor seguridad en Samba.
         echo "- Usuario Linux '$USUARIO' creado correctamente."
