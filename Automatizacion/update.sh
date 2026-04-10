@@ -35,8 +35,6 @@ aplicar_alias() {
     local origen="$1"
     local destino="$2"
 
-    echo "--- ESPAÑOLIZANDO el servidor globalmente..."
-
     # Limpiar retornos de carro (CRLF a LF) y volcar directamente
     sed 's/\r$//' "$origen" >> "$destino" # Es más eficiente que un bucle while para archivos de configuración
     source /etc/profile.d/auto_neo.sh
