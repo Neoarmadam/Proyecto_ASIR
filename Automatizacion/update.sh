@@ -37,7 +37,13 @@ aplicar_alias() {
 
     # Limpiar retornos de carro (CRLF a LF) y volcar directamente
     sed 's/\r$//' "$origen" >> "$destino" # Es más eficiente que un bucle while para archivos de configuración
-    exec bash
+}
+
+# Funcion que reinicia el servidor al acabar.
+reiniciar_servidor() {
+    echo "--- Reiniciando el servidor para aplicar las actualizaciones correctamente. ---"
+    sleep 3
+    sudo reboot
 }
 
 # Funcion para dar avisos al usuario.
@@ -86,6 +92,7 @@ main(){
     hacer_backup "$config_global"
     aplicar_alias "$ARCHIVO_ALIASTXT" "$config_global"
     echo "[+]Alias actualizados."
+    reiniciar_servidor
 }
 
 main
