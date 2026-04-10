@@ -43,6 +43,8 @@ eliminar_samba() {
     dnf remove -y samba samba-common
     dnf autoremove -y
     sudo systemctl disable --now smb nmb
+    sudo firewall-cmd --permanent --remove-service=samba
+    sudo firewall-cmd --reload
 }
 
 # Funcion que limpia las configuraciones resuiduales de Samba.
