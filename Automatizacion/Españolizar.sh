@@ -57,7 +57,7 @@ aplicar_alias() {
     
     # Limpiar retornos de carro (CRLF a LF) y volcar directamente
     sed 's/\r$//' "$origen" >> "$destino" # Es más eficiente que un bucle while para archivos de configuración
-    source /etc/profile.d/auto_neo.sh
+    exec bash
 }
 
 # Funcion que reinicia el servidor al acabar.
