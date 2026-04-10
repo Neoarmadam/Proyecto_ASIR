@@ -53,7 +53,7 @@ borrar_usuario() {
                 echo "Usuario '$USUARIO_BORRAR' eliminado del sistema."
             fi
 
-            systemctl restart smbd
+            systemctl restart smb
             echo "Proceso finalizado."
         else
             echo "ERROR: El usuario '$USUARIO_BORRAR' no existe en Samba."
