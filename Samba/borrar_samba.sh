@@ -42,6 +42,7 @@ eliminar_samba() {
     sleep 3
     dnf remove -y samba samba-common
     dnf autoremove -y
+    sudo systemctl disable --now smb nmb
 }
 
 # Funcion que limpia las configuraciones resuiduales de Samba.
