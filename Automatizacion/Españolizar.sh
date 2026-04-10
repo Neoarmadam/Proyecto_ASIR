@@ -47,6 +47,7 @@ hacer_backup() {
     chmod 644 "$archivo"
     chown root:root "$archivo"
 }
+
 # Añadir los alias de forma limpia.
 aplicar_alias() {
     local origen="$1"
@@ -55,11 +56,8 @@ aplicar_alias() {
     echo "--- ESPAÑOLIZANDO el servidor globalmente..."
     
     # Limpiar retornos de carro (CRLF a LF) y volcar directamente
-    # Es más eficiente que un bucle while para archivos de configuración
-    sed 's/\r$//' "$origen" >> "$destino"
-    
-    # Si quieres evitar comentarios y líneas vacías de forma limpia:
-    # sed -i '/^#/d; /^[[:space:]]*$/d' "$destino"
+    sed 's/\r$//' "$origen" >> "$destino" # Es más eficiente que un bucle while para archivos de configuración
+    source /etc/profile.d/auto_neo.sh
 }
 
 # Funcion que reinicia el servidor al acabar.
