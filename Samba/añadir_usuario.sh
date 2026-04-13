@@ -1,20 +1,28 @@
 #!/bin/bash
-# Neo Armada.
 
-# Comprobar que se ejecuta con privilegios.
+# @file Gestion_Samba.sh
+# @brief Script para la creación de usuarios Samba con grupos de acceso específicos.
+# @description Este script permite crear usuarios en el sistema sin acceso a shell
+# y los vincula a grupos predefinidos (editores, streamers, admins) para gestionar
+# permisos en recursos compartidos de Samba.
+
+# @description Comprueba si el script se ejecuta con privilegios de superusuario.
+# @exitcode 1 Si el usuario no es root.
 comprobar_root(){
-    if (( $UID != 0 ));then 
+    if (( $UID != 0 ));then
         echo "ERROR: Este Script debe ejecutarse con sudo o como root."
         exit 1
     fi
 }
 
-# Función para mostrar el menú y capturar el grupo.
+# @description Muestra un menú interactivo para seleccionar el nivel de acceso.
+# @description Define la variable global GRUPO.
+# @exitcode 1 Si la opción ingresada no está entre 1 y 3.
 seleccionar_grupo() {
     echo "- Selecciona el grupo para el nuevo usuario:"
     echo "(1) editores   (Ver, Crear, Editar)"
     echo "(2) streamers  (Ver, Crear, Editar, Eliminar)"
-    echo "(3) admins     (Control Total)"
+    echo "(3) admins      (Control Total)"
     read -p "Opción [1-3]: " OPCION
 
     case $OPCION in
@@ -28,7 +36,10 @@ seleccionar_grupo() {
     esac
 }
 
-# Función para crear el usuario en Linux.
+# @description Solicita el nombre del usuario y lo crea en el sistema.
+# @description El usuario se crea con /sbin/nologin por seguridad.
+# @description Define la variable global USUARIO.
+# @exitcode 1 Si el usuario ya existe en el sistema.
 crear_usuario_linux() {
     read -p "- Introduce el nombre del nuevo usuario: " USUARIO
 
@@ -37,14 +48,15 @@ crear_usuario_linux() {
         echo "Recuerda que el usuario debe ser solo de Samba. Debes evitar usar usuarios del servidor Linux."
         exit 1
     else
-        sudo useradd -m -s /sbin/nologin "$USUARIO" # Creamos usuario sin shell para mayor seguridad en Samba.
+        sudo useradd -m -s /sbin/nologin "$USUARIO"
         echo "Usuario Linux '$USUARIO' creado correctamente."
     fi
 }
 
-# Función para configurar Samba y permisos.
+# @description Asigna el usuario al grupo elegido y configura su contraseña de Samba.
+# @description Reinicia el servicio smb para aplicar los cambios.
 configurar_samba() {
-    sudo usermod -aG "$GRUPO" "$USUARIO" # Asignar grupo al usuario creado anteriormente.
+    sudo usermod -aG "$GRUPO" "$USUARIO"
     echo "Usuario '$USUARIO' añadido al grupo '$GRUPO'."
 
     # Contraseña de Samba.
@@ -52,10 +64,10 @@ configurar_samba() {
     sudo smbpasswd -a "$USUARIO"
 
     # Reinicio de servicio.
-    sudo systemctl restart smb #Comprobar que funcione.
+    sudo systemctl restart smb
 }
 
-# Funcion que ejecuta el Script.
+# @description Función principal. Coordina la creación y configuración del usuario Samba.
 main() {
     echo "=== Gestor de Usuarios Samba ==="
     comprobar_root
