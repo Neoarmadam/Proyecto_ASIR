@@ -1,7 +1,13 @@
 #!/bin/bash
-# Neo Armada - Gestion de Usuarios (Borrar usuarios en Samba).
 
-# Comprobar que se ejecuta con privilegios.
+# @file Borrar_Usuarios_Samba.sh
+# @brief Script interactivo para listar y eliminar usuarios de Samba y del sistema Linux.
+# @description Proporciona un menú sencillo para visualizar qué usuarios tienen acceso a Samba,
+# a qué grupos pertenecen y permite eliminarlos de la base de datos TDB de Samba y,
+# opcionalmente, borrar su cuenta de sistema y directorio personal.
+
+# @description Comprueba si el script se ejecuta con privilegios de superusuario.
+# @exitcode 1 Si el usuario no es root.
 comprobar_root(){
     if (( $UID != 0 )); then
         echo "ERROR: Este Script debe ejecutarse con sudo o como root."
@@ -9,12 +15,15 @@ comprobar_root(){
     fi
 }
 
-# Función para listar usuarios de Samba y sus grupos
+# @description Lista todos los usuarios registrados en Samba extrayendo la información con pdbedit.
+# @description Para cada usuario, muestra los grupos del sistema a los que está asociado.
+# @stdout Tabla con la relación Usuario | Grupos.
+# @exitcode 1 Si no se encuentran usuarios en la base de datos de Samba.
 listar_usuarios() {
     echo -e "\n=== Usuarios actuales en Samba y sus Grupos ==="
     echo "------------------------------------------------"
     # pdbedit lista los usuarios de samba. Extraemos solo el nombre.
-    users=$(pdbedit -L | cut -d ":" -f 1)
+    local users=$(pdbedit -L | cut -d ":" -f 1)
 
     if [ -z "$users" ]; then
         echo "No hay usuarios registrados en Samba."
@@ -23,14 +32,17 @@ listar_usuarios() {
 
     for user in $users; do
         # Obtenemos los grupos del usuario en el sistema
-        grupos=$(groups "$user" | cut -d ":" -f 2)
+        local grupos=$(groups "$user" | cut -d ":" -f 2)
         echo "Usuario: $user | Grupos:$grupos"
     done
     echo "------------------------------------------------"
     return 0
 }
 
-# Función para borrar usuario
+# @description Interfaz para la eliminación de un usuario específico.
+# @description Primero verifica la existencia del usuario en Samba, lo elimina con smbpasswd
+# y pregunta al administrador si desea realizar un 'userdel -r' en el sistema Linux.
+# @exitcode 0 Si la operación se cancela o finaliza correctamente.
 borrar_usuario() {
     listar_usuarios
     if [ $? -eq 0 ]; then
@@ -61,7 +73,7 @@ borrar_usuario() {
     fi
 }
 
-# Función principal (Menú)
+# @description Función principal que despliega el menú de navegación del script.
 main() {
     comprobar_root
     echo "=== Gestor de Usuarios Samba ==="
