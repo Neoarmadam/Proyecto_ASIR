@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# @file Espanolizar_Servidor.sh
+# @file Automatizacion/Espanolizar.sh
 # @brief Script para instalar dependencias críticas, ZeroTier y configurar alias globales.
 # @description Este script automatiza la instalación de paquetes DNF (Cockpit, Podman),
 # configura ZeroTier y aplica una configuración de alias personalizada para todos los usuarios.

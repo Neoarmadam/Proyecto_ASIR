@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# @file Borrar_Usuarios_Samba.sh
+# @file Samba/borrar_usuario.sh
 # @brief Script interactivo para listar y eliminar usuarios de Samba y del sistema Linux.
 # @description Proporciona un menú sencillo para visualizar qué usuarios tienen acceso a Samba,
 # a qué grupos pertenecen y permite eliminarlos de la base de datos TDB de Samba y,

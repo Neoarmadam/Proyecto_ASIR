@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# @file Gestion_Samba.sh
+# @file Samba/añadir_usuario.sh
 # @brief Script para la creación de usuarios Samba con grupos de acceso específicos.
 # @description Este script permite crear usuarios en el sistema sin acceso a shell
 # y los vincula a grupos predefinidos (editores, streamers, admins) para gestionar

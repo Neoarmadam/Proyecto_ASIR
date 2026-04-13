@@ -1,4 +1,4 @@
-## Index
+## Samba/iniciar_samba.sh
 
 * [comprobar_root](#comprobarroot)
 * [instalar_samba](#instalarsamba)

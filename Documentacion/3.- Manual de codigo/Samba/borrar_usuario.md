@@ -1,4 +1,4 @@
-# Borrar_Usuarios_Samba.sh
+# Samba/borrar_usuario.sh
 
 Script interactivo para listar y eliminar usuarios de Samba y del sistema Linux.
 

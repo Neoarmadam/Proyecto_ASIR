@@ -1,4 +1,4 @@
-# Espanolizar_Servidor.sh
+# Automatizacion/Espanolizar.sh
 
 Script para instalar dependencias críticas, ZeroTier y configurar alias globales.
 

@@ -1,4 +1,4 @@
-# Gestion_Samba.sh
+# Samba/añadir_usurio.sh
 
 Script para la creación de usuarios Samba con grupos de acceso específicos.
 

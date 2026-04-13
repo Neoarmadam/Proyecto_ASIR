@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# @file Desinstalar_Samba.sh
+# @file Samba/borrar_samba.sh
 # @brief Script para la eliminación completa de Samba, sus configuraciones, usuarios y grupos.
 # @description Este script realiza una limpieza profunda de Samba en sistemas Fedora.
 # Elimina paquetes, servicios, reglas de firewall, archivos de configuración residuales
