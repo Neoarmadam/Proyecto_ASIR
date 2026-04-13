@@ -1,15 +1,23 @@
 #!/bin/bash
 # Neo Armada.
 
-# Comprobar que se ejecuta con privilegios.
+# @file update.sh
+# @brief Script para actualizar el repositorio de automatización de Neo y configurar alias.
+# @description Este script clona un repositorio de GitHub, gestiona archivos de configuración
+# en /etc/profile.d/ y aplica alias del sistema. Requiere privilegios de root.
+
+# @description Comprueba si el usuario tiene privilegios de superusuario.
+# @exitcode 1 Si el usuario no es root.
 comprobar_root(){
-    if (( $UID != 0 ));then 
+    if (( $UID != 0 ));then
         echo "ERROR: Este Script debe ejecutarse con sudo o como root."
         exit 1
     fi
 }
 
-# Comprobar que el archivo alias esta.
+# @description Verifica la existencia de un archivo necesario para los alias.
+# @param $1 string Ruta al archivo de alias.
+# @exitcode 1 Si el archivo no existe.
 comprobar_alias(){
     if [[ ! -f "$1" ]]; then
         echo "ERROR: No se encuentra el archivo '$1'."
@@ -17,7 +25,8 @@ comprobar_alias(){
     fi
 }
 
-# Crear Backup (Solo si el archivo ya existe).
+# @description Crea un backup con marca de tiempo y vacía el archivo original.
+# @param $1 string Ruta del archivo al que se le hará el backup.
 hacer_backup() {
     local archivo="$1"
     if [[ -f "$archivo" ]]; then
@@ -30,23 +39,26 @@ hacer_backup() {
     chown root:root "$archivo"
 }
 
-# Añadir los alias de forma limpia.
+# @description Añade el contenido de un archivo a otro, eliminando formatos de línea de Windows (CRLF).
+# @param $1 string Archivo origen.
+# @param $2 string Archivo destino.
 aplicar_alias() {
     local origen="$1"
     local destino="$2"
 
     # Limpiar retornos de carro (CRLF a LF) y volcar directamente
-    sed 's/\r$//' "$origen" >> "$destino" # Es más eficiente que un bucle while para archivos de configuración
+    sed 's/\r$//' "$origen" >> "$destino"
 }
 
-# Funcion que reinicia el servidor al acabar.
+# @description Informa al usuario y reinicia el sistema.
 reiniciar_servidor() {
     echo "--- Reiniciando el servidor para aplicar las actualizaciones correctamente. ---"
     sleep 3
     sudo reboot
 }
 
-# Funcion para dar avisos al usuario.
+# @description Muestra avisos legales y de confirmación al usuario.
+# @exitcode 1 Si el usuario cancela la operación con cualquier tecla que no sea ENTER.
 avisos(){
     local opcion
 
@@ -73,19 +85,19 @@ avisos(){
     sleep 1
 }
 
-# Funcion que ejecuta el Script. Actualiza los templates.
+# @description Función principal que coordina la actualización del repo y los alias.
 main(){
-    local REPO_URL="https://github.com/Neoarmadam/Proyecto_ASIR" #Ruta de mi Github.
-    local TARGET_DIR="/Auto_Neo" #Ruta de la carpeta de clonacion del GitHub.
+    local REPO_URL="https://github.com/Neoarmadam/Proyecto_ASIR"
+    local TARGET_DIR="/Auto_Neo"
     local DIR_SCRIPT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
     local ARCHIVO_ALIASTXT="$DIR_SCRIPT/alias.txt"
     local config_global="/etc/profile.d/auto_neo.sh"
 
     avisos
     echo "--- Actualizando plantillas..."
-    sudo rm -rf $TARGET_DIR
-    sudo git clone $REPO_URL $TARGET_DIR
-    sudo chmod +x -R $TARGET_DIR
+    rm -rf $TARGET_DIR
+    git clone $REPO_URL $TARGET_DIR
+    chmod +x -R $TARGET_DIR
     echo "[+]Repositorio actualizado."
     echo "--- Actualizando alias..."
     comprobar_alias "$ARCHIVO_ALIASTXT"
