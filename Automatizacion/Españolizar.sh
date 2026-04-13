@@ -1,15 +1,21 @@
 #!/bin/bash
-# Neo Armada.
 
-# Comprobar que se ejecuta con privilegios.
+# @file Espanolizar_Servidor.sh
+# @brief Script para instalar dependencias críticas, ZeroTier y configurar alias globales.
+# @description Este script automatiza la instalación de paquetes DNF (Cockpit, Podman),
+# configura ZeroTier y aplica una configuración de alias personalizada para todos los usuarios.
+
+# @description Comprueba si el usuario tiene privilegios de superusuario usando EUID.
+# @exitcode 1 Si el usuario no tiene privilegios de root.
 comprobar_root(){
-    if [[ $EUID -ne 0 ]]; then 
+    if [[ $EUID -ne 0 ]]; then
         echo "ERROR: Este Script debe ejecutarse con sudo o como root."
         exit 1
     fi
 }
 
-# Instalar dependencias en el servidor.
+# @description Instala dependencias del sistema (git, cockpit) y ZeroTier vía curl.
+# @description También clona el repositorio principal si no existe en el destino.
 instalar_dependencias(){
     local REPO_URL="https://github.com/Neoarmadam/Proyecto_ASIR"
     local TARGET_DIR="/Auto_Neo"
@@ -27,7 +33,9 @@ instalar_dependencias(){
     fi
 }
 
-# Comprobar que el archivo alias esta.
+# @description Verifica la existencia del archivo de texto que contiene los alias.
+# @param $1 string Ruta al archivo alias.txt.
+# @exitcode 1 Si el archivo no es encontrado.
 comprobar_alias(){
     if [[ ! -f "$1" ]]; then
         echo "ERROR: No se encuentra el archivo '$1'."
@@ -35,7 +43,8 @@ comprobar_alias(){
     fi
 }
 
-# Crear Backup (Solo si el archivo ya existe).
+# @description Realiza copia de seguridad del archivo de configuración y lo inicializa.
+# @param $1 string Ruta del archivo de destino (ej. /etc/profile.d/auto_neo.sh).
 hacer_backup() {
     local archivo="$1"
     if [[ -f "$archivo" ]]; then
@@ -43,30 +52,32 @@ hacer_backup() {
         cp "$archivo" "$nombre_bak"
         echo "- Backup creado: $nombre_bak"
     fi
-    : > "$archivo" 
+    : > "$archivo"
     chmod 644 "$archivo"
     chown root:root "$archivo"
 }
 
-# Añadir los alias de forma limpia.
+# @description Limpia caracteres CRLF y concatena los alias al archivo de configuración global.
+# @param $1 string Archivo origen (alias.txt).
+# @param $2 string Archivo destino (configuración global).
 aplicar_alias() {
     local origen="$1"
     local destino="$2"
 
     echo "--- ESPAÑOLIZANDO el servidor globalmente..."
-    
+
     # Limpiar retornos de carro (CRLF a LF) y volcar directamente
-    sed 's/\r$//' "$origen" >> "$destino" # Es más eficiente que un bucle while para archivos de configuración
+    sed 's/\r$//' "$origen" >> "$destino"
 }
 
-# Funcion que reinicia el servidor al acabar.
+# @description Reinicia el sistema tras una breve pausa para aplicar cambios.
 reiniciar_servidor() {
     echo "--- Reiniciando el servidor para aplicar cambios globales. Ahora es ESPAÑOL. ---"
     sleep 3
-    sudo reboot
+    reboot
 }
 
-# Funcion que dibuja una bandera de España.
+# @description Dibuja una bandera de España en la terminal usando códigos de color ANSI.
 dibujar_bandera() {
     local ROJO='\033[0;31m'
     local AMARILLO='\033[1;33m'
@@ -82,9 +93,10 @@ dibujar_bandera() {
     echo ""
 }
 
-# Funcion para dar avisos al usuario.
+# @description Gestiona los avisos de responsabilidad y confirmaciones de usuario.
+# @exitcode 1 Si el usuario decide no continuar.
 avisos(){
-    local opcion 
+    local opcion
 
     echo "--- Se está ejecutando el script: $0"
     sleep 1
@@ -109,11 +121,11 @@ avisos(){
     sleep 1
 }
 
-# Funcion principal.
+# @description Punto de entrada principal. Orquestación de dependencias, visuales y alias.
 main() {
     local DIR_SCRIPT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
     local ARCHIVO_ALIASTXT="$DIR_SCRIPT/alias.txt"
-    local config_global="/etc/profile.d/auto_neo.sh" #La idea es que los alias sean para todos los usuarios de Linux.
+    local config_global="/etc/profile.d/auto_neo.sh"
 
     comprobar_root
     avisos
