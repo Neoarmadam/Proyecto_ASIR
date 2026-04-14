@@ -14,7 +14,7 @@ alias z_todo="sudo zerotier-cli status && sudo zerotier-cli listnetworks"
 #Alias Samba
 alias smb_iniciar="sudo bash /Auto_Neo/Samba/iniciar_samba.sh"
 alias smb_borrar="sudo bash /Auto_Neo/Samba/borrar_samba.sh"
-alias smb_añadir_usuarios="sudo bash /Auto_Neo/Samba/añadir_usuario.sh"
+alias smb_añadir_usuario="sudo bash /Auto_Neo/Samba/añadir_usuario.sh"
 alias smb_borrar_usuario="sudo bash /Auto_Neo/Samba/borrar_usuario.sh"
 alias smb_listar_usuarios="sudo pdbedit -L"
 alias smb_listar_usuarios_full="sudo pdbedit -L -v"
