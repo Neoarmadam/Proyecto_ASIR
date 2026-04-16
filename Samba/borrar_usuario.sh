@@ -1,4 +1,5 @@
 #!/bin/bash
+# neo Armada
 
 # @file Samba/borrar_usuario.sh
 # @brief Script interactivo para listar y eliminar usuarios de Samba y del sistema Linux.

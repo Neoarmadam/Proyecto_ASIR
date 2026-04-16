@@ -1,5 +1,5 @@
 #!/bin/bash
-# Neo Armada.
+# Neo Armada
 
 # @file update.sh
 # @brief Script para actualizar el repositorio de automatización de Neo y configurar alias.

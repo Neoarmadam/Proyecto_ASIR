@@ -1,4 +1,5 @@
 #!/bin/bash
+# Neo Armada
 
 # @file Samba/borrar_samba.sh
 # @brief Script para la eliminación completa de Samba, sus configuraciones, usuarios y grupos.

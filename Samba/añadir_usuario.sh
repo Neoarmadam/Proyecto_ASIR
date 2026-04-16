@@ -1,4 +1,5 @@
 #!/bin/bash
+# Neo Armada
 
 # @file Samba/añadir_usuario.sh
 # @brief Script para la creación de usuarios Samba con grupos de acceso específicos.

@@ -1,4 +1,5 @@
 #!/bin/bash
+# Neo Armada
 
 # # @file Samba/iniciar_samba.sh
 # @brief Script de instalación y aprovisionamiento inicial de un servidor Samba.

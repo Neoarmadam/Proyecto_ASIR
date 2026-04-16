@@ -1,4 +1,5 @@
 #!/bin/bash
+# Neo Armada
 
 # @file Automatizacion/Espanolizar.sh
 # @brief Script para instalar dependencias críticas, ZeroTier y configurar alias globales.
