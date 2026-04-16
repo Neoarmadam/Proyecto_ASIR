@@ -49,9 +49,9 @@ eliminar_samba() {
     sleep 3
     dnf remove -y samba samba-common
     dnf autoremove -y
-    sudo systemctl disable --now smb nmb > /dev/null 2>&1
-    sudo firewall-cmd --permanent --remove-service=samba
-    sudo firewall-cmd --reload
+    systemctl disable --now smb nmb > /dev/null 2>&1
+    firewall-cmd --permanent --remove-service=samba
+    firewall-cmd --reload
 }
 
 # @description Elimina físicamente los directorios de configuración, logs y caché de Samba.
