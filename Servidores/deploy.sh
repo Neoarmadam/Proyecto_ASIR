@@ -71,7 +71,7 @@ ejecutar_despliegue() {
 
 # @description Función principal. Define el directorio objetivo y coordina el flujo de selección y ejecución.
 main() {
-    local TARGET_DIR="/Auto_Neo/Servidores"
+    local TARGET_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
     mostrar_bienvenida
 
